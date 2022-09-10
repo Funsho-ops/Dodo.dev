@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="blog.css">
+    <title>Blog</title>
+</head>
+
+<body>
+
+        <div class="c-container">
+        <nav class="nav">
+            <ul class="flex">
+                <li class="c-nav-item">
+                    <div class="c-tab is-active">
+                        <span class="c-tab_text">home</span>
+                    </div>
+                </li>
+                <li class="c-nav-item">
+                    <a class="c-tab" href="./blog.html">
+                        <span class="c-tab_text">blog</span></a></li>
+                <li class="c-nav-item">
+                    <a class="c-tab" href="https://dodov.dev/projects">
+                        <span class="c-tab_text">projects</span></a></li>
+            </ul>
+        </nav>
+            
+        <main id="content">
+            <header id="intro">
+                <h1 class="blog">Blog</h1>
+            <p class="text-secondary">A place for my developer insights and life experiences.</p>
+        </header>
+        </main>
+            
+    <article class="cache">
+            <a class="flex-cache" href="./cache.html">
+                <img src="https://dodov.dev/media/pages/blog/fixing-siteground-dynamic-cache-issues/adf04a2e0b-1642745720/siteground-random-characters-cover-171x.png"
+                alt=""/>
+            </a>
+
+            <div class="content-four">
+                <h3 class="text">
+                    <a href="./cache.html">Fixing SiteGround Dynamic Cache&nbsp;Issues
+                    </a>
+                </h3>
+                <p>That's what you get for not using&nbsp;WordPress…</p>
+
+            <p class="secondary-text">
+                <span class="sr-only">Published on</span>
+                <time datetime="2022-08-06T16:00:00+03:00"
+                title="Saturday, September 10, 2022, 16:00 EST">
+                10 Sept 2022</time>
+            </p>
+            </div>
+        </article>
+
+                <hr class="c-separator">
+
+        <footer class="footer">
+            <ul class="s-links">
+                <li><a href="https://github.com/hdodov" rel="noopener noreferrer" target="_blank">GitHub</a>
+                    <span class="hidden md: inline;" aria-hidden="true">•</span>
+                </li>
+                <li><a href="https://twitter.com/yandodov" rel="noopener noreferrer" target="_blank">Twitter</a>
+                    <span>•</span>
+                </li>
+                <li><a href="https://www.linkedin.com/in/yandodov/" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+                    <span>•</span>
+                </li>
+                <li><a href="https://www.instagram.com/yandodov/" rel="noopener noreferrer" target="_blank">Instagram</a>
+                    <span>•</span>
+                </li>
+            </ul>
+
+            <div class="select">
+                    <select name="theme-select" id="theme-select">
+                        <option value="dark-plus">Dark+</option>
+                        <option value="light-plus">Light+</option>
+                        <option value="monokai">Monokai</option>
+                        <option value="github-dark">Github Dark</option>
+                        <option value="github-light">Github Light</option>
+                        <option value="solarized-light">Solarized Light</option>
+                </select>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

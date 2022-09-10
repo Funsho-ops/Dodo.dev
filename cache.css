@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Fira Code', monospace;
+}
+
+*, ::before, ::after{
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: currentColor;
+}
+
+body{
+    overflow-x: hidden;
+    font-family: 'Fira Code', monospace;
+    background: #252526;
+    color: #d4d4d4;
+}
+
+.c-container{
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    max-width: 81ch;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+
+
+.nav{
+    overflow: auto;
+}
+
+.flex{
+    display: flex;
+
+}
+
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.c-nav-item{
+    flex: 0 0 auto;
+}
+
+.c-tab.is-active{
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.c-tab.is-child{
+    font-style: italic;
+}
+
+.c-tab_button{
+    margin: 0 0.25rem;
+    padding: 0.125rem;
+    border-radius: 0.3125rem;
+    
+}
+
+.c-tab_text{
+    font-size: .8125em;
+}
+
+.c-tab {
+    display: flex;
+    user-select: none;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    height: 2.1875em;
+    padding-left: 0.625em;
+    outline-offset: -1px;
+}
+
+.c-editor{
+    background-color: #1e1e1e;
+    flex-grow: 1;
+    padding-left: 8ch;
+    padding-right: 8ch;
+}
+
+.c-content{
+    position: relative;
+    margin-top: 2rem;
+}
+
+#content{
+    display: block;
+}
+
+.intro{
+    display: flex;
+    position: relative;
+    margin-bottom: 1.5rem;
+    z-index: 20;
+}
+
+.flex-grow{
+    flex-grow: 1;
+}
+
+.font{
+    display: block;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: 700;
+    font-size: 1.25rem;
+    max-width: 40ch;
+}
+
+.second-p{
+    text-align: right;
+    flex-shrink: 0;
+    margin-left: 1.5rem;
+    font-size: .8125rem;
+}
+
+.inline{
+    display: block;
+}
+
+.s-article p{
+    margin-bottom: 1.5rem;
+}
+
+.s-article a{
+    color: #4ec9b0;
+}
+
+.s-article blockquote{
+    display: flex;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    color: #d4d4d4;
+    margin: 0;
+}
+
+.s-article blockquote::before{
+    content: " > > >";
+    width: 1ch;
+    margin-right: 2ch;
+    color: #6a9955;
+    position: relative;
+    z-index: 20;
+}
+
+
+.s-links a{
+    color: #4ec9b0;
+    text-decoration: underline;
+    text-underline-position: under;
+}
+
+.c-link a{
+    display: inline-block;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #f8f8f2;
+    text-decoration: none;
+}
+
+.c-link span{
+    font-style: normal;
+    color: #4ec9b0;
+}
+
+.c-separator{
+    margin: 1.5rem 0;
+    display: flex;
+    height: 1.5rem;
+    overflow: hidden;
+    color: #6a9955;
+    position: relative;
+    z-index: 20;
+}
+
+hr::before{
+    content: "//";
+    margin-right: 1ch;
+}
+
+hr::after{
+    content: "-----------------------------------------------------------------------------------------";
+    overflow-wrap: anywhere;
+    font-variant-ligatures: none;
+}
+
+.footer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer li {
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.modes{
+    margin-top: 20px;
+}
+
+.select{
+    padding: 0.5em 0.1em;
+    font-size: 1rem;
+    background-color: #252526;
+    color: #d4d4d4;
+    font-family: inherit;
+    outline: none;
+    border: none;
+}

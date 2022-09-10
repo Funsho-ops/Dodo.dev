@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="./cache.css">
+    <title>Fixing SiteGround Dynamic Cache Issues</title>
+</head>
+
+<body>
+        <div class="c-container">
+        <nav class="nav">
+            <ul class="flex">
+                <li class="c-nav-item">
+                    <div class="c-tab is-active">
+                        <span class="c-tab_text">home</span>
+                    </div>
+                </li>
+
+                <li class="c-nav-item">
+                    <a class="c-tab" href="./blog.html">
+                        <span class="c-tab_text">blog</span></a></li>
+                
+                <li class="c-nav-item">
+                    <div class="c-tab is-child">
+                        <span class="c-tab_text">fixing-siteground-dynamic-cache-issues</span>
+                        <a class="c-tab_button" href="./blog.html">
+                        </a>
+                    </div>
+                </li>
+
+                <li class="c-nav-item">
+                    <a class="c-tab" href="https://dodov.dev/projects">
+                        <span class="c-tab_text">projects</span></a></li>
+            </ul>
+        </nav>
+
+            <div class="c-editor"> 
+
+                <div class="c-content">
+                <main id="content">
+                <header class="intro">
+                    <div class="flex-grow">
+                        <h1 class="font">Fixing SiteGround Dynamic Cache&nbsp;Issues</h1>
+                        <p>Thats's what you get for not using&nbsp;Wordpress</p>
+                    </div>
+
+                    <div class="second-p">
+                        <p class="inline">
+                            <!-- <span>Published on</span> -->
+                            <time datetime="2022-09-10T16:00:00+02:00" title="Saturday, September 10, 2022, 8:49 EST"> 10 Sept 2022</time>
+                        </p>
+                        <p>
+                            <span>100</span> <span>lines</span>
+                        </p>
+                    </div>
+                </header>
+        
+                <img src="https://dodov.dev/media/pages/blog/fixing-siteground-dynamic-cache-issues/adf04a2e0b-1642745720/siteground-random-characters-cover-640x.png" alt="">
+
+
+                <div class="s-article">
+
+                    <p>If your website is hosted on SiteGround and you have strange issues, such as clicking on a button and nothing happening, it could be a cache issue. By default, SiteGround caches all requests, as they've said in 
+                        <a href="https://www.siteground.com/kb/siteground-dynamic-caching-configuration/" target="_blank" rel="noopener noreferrer">their help center article</a>:
+                    </p>
+                    <blockquote>
+                        <div>
+                            <p>Our Dynamic caching is a full-page caching 
+                                mechanism powered by NGINX that's enabled and 
+                                running by default on all SiteGround servers.
+                            </p>
+                        </div>
+                </blockquote>
+
+        <p>The problem is that <strong>everything</strong> is cached, including the raw HTML of your pages and AJAX requests made by either your front-end, admin panel, or whatever. There also appears to be no way to simply turn off this functionality.</p>
+
+        <p>In my case, I'm using Kirby CMS and this aggressive caching means that if I change the status of a blog post from <em>Draft</em> to <em>Public</em>, it actually happens at a filesystem level, but since the HTML of the blog is cached, the article doesn't appear. Because AJAX requests are <em>also</em> cached, the Kirby panel front-end isn't updated as well, leaving no indication that something actually happened.</p>
+
+        <p>SiteGround has built-in exceptions for the cache. For example, if a visitor has the <code>wordpress_logged_in_</code> or <code>Drupal.visitor.name</code> cookie, they'll bypass the cache and see all changes they make immediately. However, if you're using something other than WordPress or Drupal, like me, you're screwed.</p>
+        
+        <p>Luckily, SiteGround respects <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control" target="_blank" rel="noopener noreferrer"><code>Cache-Control</code> headers</a> that your server sends. You can turn off the cache entirely by adding the following in your main <code>index.php</code> file:</p>
+
+        <div class="code">
+            <pre>
+                <code>
+                    header('Cache-Control: no-cache');
+                </code>
+            </pre>
+        </div>
+
+        <p>Alternatively, in case of using Kirby, you could disable it for just the panel by <a href="https://regex101.com/r/tM1OZT" target="_blank" rel="noopener noreferrer">matching the request path with regex</a>:</p>
+
+        <div class="code">
+            <pre>
+                <code>
+                    if (preg_match('~^/(panel|api)(/|\?|$)~', $_SERVER['REQUEST_URI'])) {
+                        header('Cache-Control: no-cache');
+                    }
+                </code>
+            </pre>
+        </div>
+
+        <p>You can check if this works by <a href="https://developer.chrome.com/docs/devtools/network/reference/#headers" target="_blank" rel="noopener noreferrer">inspecting the response headers</a> and looking for the <code>x-proxy-cache</code> header. It tells whether the response was served by the cache or not. If you see the following, the response was not cached:</p>
+
+        <pre>
+            <code>x-proxy: MISS</code>
+        </pre>
+
+        <h2>Handling Cloudflare Cache</h2>
+
+        <p>Things can be even more confusing if you use Cloudflare, due to <a href="https://developers.cloudflare.com/cache/about/default-cache-behavior" target="_blank" rel="noopener noreferrer">its own caching functionality</a>. It has to be enabled explicitly and only caches static files by default, so it has less unpleasant surprises. In my opinion, it doesn't make much sense to have both caches enabled, so you should probably disable one or the other. You can determine the Cloudflare cache status by looking at the <code>cf-cache-status</code> header.</p>
+
+        <p>The response is cached by Cloudflare if you have these headers:</p>
+
+        <pre>
+            <code>cf-cache-status: HIT x-proxy-cache: MISS</code>
+        </pre>
+
+        <p>…and you get these headers if it's cached by SiteGround instead:</p>
+
+        <pre>
+            <code>cf-cache-status: DYNAMIC x-proxy-cache: HIT</code>
+        </pre>
+                </div>
+
+    </main>
+            
+            <hr class="c-separator">
+                        <footer class="footer">
+            <ul class="s-links">
+                <li><a href="https://github.com/hdodov" rel="noopener noreferrer" target="_blank">GitHub</a>
+                    <span class="hidden md: inline;" aria-hidden="true">•</span>
+                </li>
+                <li><a href="https://twitter.com/yandodov" rel="noopener noreferrer" target="_blank">Twitter</a>
+                    <span>•</span>
+                </li>
+                <li><a href="https://www.linkedin.com/in/yandodov/" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+                    <span>•</span>
+                </li>
+                <li><a href="https://www.instagram.com/yandodov/" rel="noopener noreferrer" target="_blank">Instagram</a>
+                    <span>•</span>
+                </li>
+            </ul>
+
+            <div class="select">
+                    <select name="theme-select" id="theme-select">
+                        <option value="dark-plus">Dark+</option>
+                        <option value="light-plus">Light+</option>
+                        <option value="monokai">Monokai</option>
+                        <option value="github-dark">Github Dark</option>
+                        <option value="github-light">Github Light</option>
+                        <option value="solarized-light">Solarized Light</option>
+                </select>
+            </div>
+        </footer>
+
+            </div>
+</body>
+</html>
